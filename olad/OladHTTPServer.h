@@ -64,6 +64,8 @@ class OladHTTPServer: public ola::http::OlaHTTPServer {
 
   int JsonServerStats(const ola::http::HTTPRequest *request,
                       ola::http::HTTPResponse *response);
+  int JsonSpacelightStats(const ola::http::HTTPRequest *request,
+                       ola::http::HTTPResponse *response);
   int JsonUniversePluginList(const ola::http::HTTPRequest *request,
                              ola::http::HTTPResponse *response);
   int JsonPluginInfo(const ola::http::HTTPRequest *request,
@@ -82,6 +84,12 @@ class OladHTTPServer: public ola::http::OlaHTTPServer {
   int GetDmx(const ola::http::HTTPRequest *request,
              ola::http::HTTPResponse *response);
   int HandleSetDmx(const ola::http::HTTPRequest *request,
+                   ola::http::HTTPResponse *response);
+  int SetSpacelight(const ola::http::HTTPRequest *request,
+                     ola::http::HTTPResponse *response);
+  int GetIntensity(const ola::http::HTTPRequest *request,
+             ola::http::HTTPResponse *response);
+  int SetIntensity(const ola::http::HTTPRequest *request,
                    ola::http::HTTPResponse *response);
   int DisplayQuit(const ola::http::HTTPRequest *request,
                   ola::http::HTTPResponse *response);
@@ -163,7 +171,14 @@ class OladHTTPServer: public ola::http::OlaHTTPServer {
                     const client::Result &result,
                     const client::DMXMetadata &metadata,
                     const DmxBuffer &buffer);
-
+ void HandleGetIntensity(ola::http::HTTPResponse *response,
+                    const client::Result &result,
+                    const client::DMXMetadata &metadata,
+                    const DmxBuffer &buffer);
+  void HandleGet(ola::http::HTTPResponse *response,
+                    const client::Result &result,
+                    const client::DMXMetadata &metadata,
+                    const DmxBuffer &buffer);
   void HandleBoolResponse(ola::http::HTTPResponse *response,
                           const client::Result &result);
 

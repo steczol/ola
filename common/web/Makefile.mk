@@ -14,7 +14,7 @@ dist_noinst_DATA += \
     common/web/testdata/type.test
 
 # LIBRARIES
-################################################
+################################################ Spacelight added
 noinst_LTLIBRARIES += common/web/libolaweb.la
 common_web_libolaweb_la_SOURCES = \
     common/web/Json.cpp \
@@ -38,7 +38,9 @@ common_web_libolaweb_la_SOURCES = \
     common/web/SchemaParseContext.cpp \
     common/web/SchemaParseContext.h \
     common/web/SchemaParser.cpp \
-    common/web/SchemaParser.h
+    common/web/SchemaParser.h	\
+    common/web/Spacelight.cpp \
+    common/web/Spacelight.h
 
 if USING_WIN32
 #Work around limitations with Windows library linking

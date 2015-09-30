@@ -9,7 +9,7 @@ AUX_DIST                = $(auxdir)/install-sh $(auxdir)/missing \
                           $(auxdir)/mkinstalldirs
 
 # As suggested by libtoolize
-ACLOCAL         = aclocal -I $(auxdir)
+ACLOCAL         = aclocal -I $/usr/bin -I $(auxdir)
 ACLOCAL_AMFLAGS = -I config
 
 include aminclude.am

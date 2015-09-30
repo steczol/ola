@@ -22,6 +22,7 @@ EXTRA_DIST += \
     javascript/ola/common/section_render.js \
     javascript/ola/common/server.js \
     javascript/ola/common/server_stats.js \
+    javascript/ola/common/spacelight_stats.js \
     javascript/ola/common/sorted_list.js \
     javascript/ola/common/uid_list.js \
     javascript/ola/dialog.js \

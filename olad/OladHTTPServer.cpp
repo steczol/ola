@@ -22,6 +22,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include "ola/ActionQueue.h"
 #include "ola/Callback.h"
@@ -38,7 +39,14 @@
 #include "olad/OlaServer.h"
 #include "olad/Preferences.h"
 
+#include "common/base/Sumo.h"
+
 namespace ola {
+
+	int curr_Intensity;
+	int curr_ColorTemperature;
+	int curr_DMX;
+	bool curr_OnOff;
 
 using ola::client::OlaDevice;
 using ola::client::OlaInputPort;
@@ -95,6 +103,7 @@ OladHTTPServer::OladHTTPServer(ExportMap *export_map,
   RegisterHandler("/set_plugin_state", &OladHTTPServer::SetPluginState);
   RegisterHandler("/set_dmx", &OladHTTPServer::HandleSetDmx);
   RegisterHandler("/get_dmx", &OladHTTPServer::GetDmx);
+  RegisterHandler("/set_spacelight", &OladHTTPServer::SetSpacelight);
 
   // json endpoints for the new UI
   RegisterHandler("/json/server_stats", &OladHTTPServer::JsonServerStats);
@@ -103,29 +112,27 @@ OladHTTPServer::OladHTTPServer(ExportMap *export_map,
   RegisterHandler("/json/plugin_info", &OladHTTPServer::JsonPluginInfo);
   RegisterHandler("/json/get_ports", &OladHTTPServer::JsonAvailablePorts);
   RegisterHandler("/json/universe_info", &OladHTTPServer::JsonUniverseInfo);
+  RegisterHandler("/json/spacelight_stats", &OladHTTPServer::JsonSpacelightStats);
 
   // these are the static files for the old UI
-  m_server.RegisterFile("/blank.gif", HTTPServer::CONTENT_TYPE_GIF);
-  m_server.RegisterFile("/button-bg.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/custombutton.css", HTTPServer::CONTENT_TYPE_CSS);
-  m_server.RegisterFile("/editortoolbar.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/expander.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/handle.vertical.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/loader.gif", HTTPServer::CONTENT_TYPE_GIF);
-  m_server.RegisterFile("/loader-mini.gif", HTTPServer::CONTENT_TYPE_GIF);
-  m_server.RegisterFile("/logo.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/logo-mini.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/mobile.html", HTTPServer::CONTENT_TYPE_HTML);
-  m_server.RegisterFile("/mobile.js", HTTPServer::CONTENT_TYPE_JS);
+  m_server.RegisterFile("/assets/advanced.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/style.css", HTTPServer::CONTENT_TYPE_CSS);
+  m_server.RegisterFile("/assets/arrowleft.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/assets/arrowright.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/assets/darrowleft.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/assets/darrowright.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/assets/info.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/assets/logo.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/assets/k.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/setquantity.js", HTTPServer::CONTENT_TYPE_JS);
   m_server.RegisterFile("/ola.html", HTTPServer::CONTENT_TYPE_HTML);
+  m_server.RegisterFile("/respond.min.js", HTTPServer::CONTENT_TYPE_JS);
   m_server.RegisterFile("/ola.js", HTTPServer::CONTENT_TYPE_JS);
-  m_server.RegisterFile("/tick.gif", HTTPServer::CONTENT_TYPE_GIF);
-  m_server.RegisterFile("/toolbar-bg.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/toolbar.css", HTTPServer::CONTENT_TYPE_CSS);
-  m_server.RegisterFile("/toolbar_sprites.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/vertical.gif", HTTPServer::CONTENT_TYPE_GIF);
-  m_server.RegisterFile("/warning.png", HTTPServer::CONTENT_TYPE_PNG);
-  m_server.RegisterFile("/", "landing.html", HTTPServer::CONTENT_TYPE_HTML);
+  m_server.RegisterFile("/spacelight.js", HTTPServer::CONTENT_TYPE_JS);
+  m_server.RegisterFile("/assets/on-off.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/boilerplate.css", HTTPServer::CONTENT_TYPE_CSS);
+  m_server.RegisterFile("/assets/percentage.png", HTTPServer::CONTENT_TYPE_PNG);
+  m_server.RegisterFile("/", "ola.html", HTTPServer::CONTENT_TYPE_HTML);
 
   // these are the static files for the new UI
   m_server.RegisterFile(
@@ -306,6 +313,36 @@ int OladHTTPServer::JsonServerStats(const HTTPRequest*,
   return r;
 }
 
+/**
+ * @brief Print the server stats JSON
+ * @param request the HTTPRequest
+ * @param response the HTTPResponse
+ * @returns MHD_NO or MHD_YES
+ */
+int OladHTTPServer::JsonSpacelightStats(const HTTPRequest*,
+                                    HTTPResponse *response) {
+
+	curr_Intensity = 40;
+	curr_ColorTemperature = 4500;
+	curr_DMX = 1;
+	curr_OnOff = true;
+
+  JsonObject json;
+  json.Add("Intensity", curr_Intensity);
+  json.Add("ColorTemperature", curr_ColorTemperature);
+  json.Add("DMX", curr_DMX);
+  json.Add("OnOff", curr_OnOff);
+	//perhaps the int and bool values will need toString conversion
+
+  //DebugSumo("OladHTTPServer: Intensity: ");
+
+  response->SetNoCache();
+  response->SetContentType(HTTPServer::CONTENT_TYPE_PLAIN);
+  int r = response->SendJson(json);
+  delete response;
+  return r;
+}
+
 
 /**
  * @brief Print the list of universes / plugins as a json string
@@ -385,7 +422,7 @@ int OladHTTPServer::JsonUniverseInfo(OLA_UNUSED const HTTPRequest *request,
 int OladHTTPServer::JsonAvailablePorts(const HTTPRequest *request,
                                        HTTPResponse *response) {
   if (request->CheckParameterExists(HELP_PARAMETER)) {
-    return ServeUsage(response, "? or ?id=[universe]");
+    return ServeUsage(response, "? or ?=[universe]");
   }
   string uni_id = request->GetParameter("id");
 
@@ -578,6 +615,7 @@ int OladHTTPServer::GetDmx(const HTTPRequest *request,
 }
 
 
+
 /**
  * @brief Handle the set DMX command
  * @param request the HTTPRequest
@@ -608,6 +646,52 @@ int OladHTTPServer::HandleSetDmx(const HTTPRequest *request,
   m_client.SendDMX(universe_id, buffer, args);
   return MHD_YES;
 }
+
+
+/**
+ * @brief Handle the set DMX command
+ * @param request the HTTPRequest
+ * @param response the HTTPResponse
+ * @returns MHD_NO or MHD_YES
+ */
+int OladHTTPServer::SetSpacelight(const HTTPRequest *request,
+                                 HTTPResponse *response) {
+  if (request->CheckParameterExists(HELP_PARAMETER)) {
+    return ServeUsage(response,
+        "POST u=[universe], d=[DMX data (a comma separated list of values)]");
+  }
+  string dmx_data_str = request->GetPostParameter("d");
+  string uni_id = request->GetPostParameter("u");
+  DebugSumo(dmx_data_str);
+
+
+  curr_Intensity = dmx2sumo(dmx_data_str, 0);
+  curr_ColorTemperature = dmx2sumo(dmx_data_str, 1);
+  curr_DMX = dmx2sumo(dmx_data_str, 2);
+
+  cout << curr_Intensity << endl;
+  cout << curr_ColorTemperature << endl;
+  cout << curr_DMX << endl;
+
+
+  unsigned int universe_id;
+  if (!StringToInt(uni_id, &universe_id)) {
+    return ServeHelpRedirect(response);
+  }
+
+  DmxBuffer buffer;
+  buffer.SetFromString(dmx_data_str);
+  if (!buffer.Size()) {
+    return m_server.ServeError(response, "Invalid DMX string");
+  }
+
+  ola::client::SendDMXArgs args(
+      NewSingleCallback(this, &OladHTTPServer::HandleBoolResponse, response));
+  m_client.SendDMX(universe_id, buffer, args);
+  return MHD_YES;
+}
+
+
 
 
 /**
@@ -1031,6 +1115,23 @@ void OladHTTPServer::HandleGetDmx(HTTPResponse *response,
   str << "[" << buffer.ToString() << "]";
   JsonObject json;
   json.AddRaw("dmx", str.str());
+  json.Add("error", result.Error());
+
+  response->SetNoCache();
+  response->SetContentType(HTTPServer::CONTENT_TYPE_PLAIN);
+  response->SendJson(json);
+  delete response;
+}
+
+void OladHTTPServer::HandleGetIntensity(HTTPResponse *response,
+                                  const client::Result &result,
+                                  const client::DMXMetadata &,
+                                  const DmxBuffer &buffer) {
+  // rather than adding 512 JsonValue we cheat and use raw here
+  ostringstream str;
+  str << "[" << buffer.ToString() << "]";
+  JsonObject json;
+  json.AddRaw("intensity", "50");
   json.Add("error", result.Error());
 
   response->SetNoCache();

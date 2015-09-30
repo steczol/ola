@@ -7,7 +7,8 @@ common_libolacommon_la_SOURCES += \
     common/base/Init.cpp \
     common/base/Logging.cpp \
     common/base/SysExits.cpp \
-    common/base/Version.cpp
+    common/base/Version.cpp \
+    common/base/Sumo.cpp
 
 # TESTS
 ##################################################

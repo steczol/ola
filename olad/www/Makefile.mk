@@ -1,4 +1,5 @@
 wwwdir = $(www_datadir)
+assetsdir = $(www_datadir)/assets
 newdir = $(www_datadir)/new
 viewsdir = $(www_datadir)/new/views
 jsdir = $(www_datadir)/new/js
@@ -12,38 +13,24 @@ bootjsdir = $(www_datadir)/new/libs/bootstrap/js
 bootfontsdir = $(www_datadir)/new/libs/bootstrap/fonts
 
 dist_www_DATA = \
-    olad/www/back.png \
-    olad/www/blank.gif \
-    olad/www/button-bg.png \
-    olad/www/console_values.html \
-    olad/www/custombutton.css \
-    olad/www/discovery.png \
-    olad/www/editortoolbar.png \
-    olad/www/expander.png \
-    olad/www/forward.png \
-    olad/www/handle.vertical.png \
-    olad/www/hide_sections.png \
-    olad/www/incremental-discovery.png \
-    olad/www/landing.html \
-    olad/www/light_bulb_off.png \
-    olad/www/light_bulb.png \
-    olad/www/loader-mini.gif \
-    olad/www/loader.gif \
-    olad/www/logo-mini.png \
-    olad/www/logo.png \
-    olad/www/mobile.html \
-    olad/www/mobile.js \
-    olad/www/ola.html \
-    olad/www/ola.js \
-    olad/www/refresh.png \
-    olad/www/show_sections.png \
-    olad/www/tick.gif \
-    olad/www/toolbar-bg.png \
-    olad/www/toolbar.css \
-    olad/www/toolbar_sprites.png \
-    olad/www/vertical.gif \
-    olad/www/wand.png \
-    olad/www/warning.png
+	olad/www/ola.html	\
+	olad/www/style.css	\
+	olad/www/boilerplate.css	\
+	olad/www/setquantity.js	\
+	olad/www/respond.min.js	\
+	olad/www/spacelight.js	\
+	olad/www/ola.js
+dist_assets_DATA = \
+	olad/www/assets/advanced.png \
+    olad/www/assets/arrowleft.png \
+    olad/www/assets/arrowright.png \
+    olad/www/assets/darrowleft.png \
+    olad/www/assets/darrowright.png \
+    olad/www/assets/info.png \
+    olad/www/assets/k.png \
+    olad/www/assets/logo.png \
+    olad/www/assets/on-off.png \
+    olad/www/assets/percentage.png	
 dist_new_DATA = \
     olad/www/new/index.html
 dist_views_DATA = \
@@ -63,7 +50,7 @@ dist_js_DATA = \
     olad/www/new/js/app.min.js \
     olad/www/new/js/app.min.js.map
 dist_css_DATA = \
-    olad/www/new/css/style.min.css
+    olad/www/new/css/style.min.css 
 dist_img_DATA = \
     olad/www/new/img/light_bulb_off.png \
     olad/www/new/img/light_bulb.png \

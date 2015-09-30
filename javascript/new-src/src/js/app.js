@@ -24,7 +24,8 @@ angular
     'MIN_CHANNEL_NUMBER': 1,
     'MAX_CHANNEL_NUMBER': 512,
     'MIN_CHANNEL_VALUE': 0,
-    'MAX_CHANNEL_VALUE': 255
+    'MAX_CHANNEL_VALUE': 255,
+	'INTENSITY': 50
   })
   .factory('$ola', ['$http', '$window', 'OLA',
     function($http, $window, OLA) {
