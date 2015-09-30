@@ -1,0 +1,12 @@
+/**
+ * @file Debug_Sumo.h
+ * @brief Function(s) for debug purposes
+ */
+
+#include "Debug_Sumo.h"
+
+
+void DebugSumo(std::string msg){
+
+    OLA_WARN << msg;
+}

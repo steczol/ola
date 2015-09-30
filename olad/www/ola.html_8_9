@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUMOLIGHT | SPACELIGHT</title>
+<!---<link href="boilerplate.css" rel="stylesheet" type="text/css">--->
+<link href="style.css" rel="stylesheet" type="text/css">
+</head>
+<script src='ola.js'></script>
+<script type="text/javascript">	//Script for showing/hiding some infos in text-fields
+    var previous;
+    previous.style.display='none';
+ 	function toggle_visibility(id) {
+	var e = document.getElementById(id);
+	e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+}
+</script>
+<!---
+<script type="text/javascript">	//Script for getting saved values from a file //WORKS
+        function get_val() {
+           <%get_val()%>
+        }
+        window.onload = get_val();
+</script>
+--->
+
+<body> 
+<center>   	
+<div class="gridContainer clearfix">
+        <div id="div1" class="fluid"><img src='/assets/logo.png' alt="logo" />    <!--- SUMO LOGO --->
+
+<p id="text"></p>
+<p id="text2"></p>
+
+
+
+<!--- Intensity NEW--->
+<form id="number1" method="post" action="<%=REQUEST_URI%>/set" enctype="multipart/form-data" class="fluid">
+	        <div class="order-option">INTENSITY<br> 
+    		<span id="intensity-field"> 
+
+        
+		<input class="text_sumo" type="text" id="intensity" name="int_text" value="<%=pcdata(lua_int)%>",onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }" min="0" max="100"/><img src="/assets/percentage.png" alt=""/>	<!--<br>	check input class, cbi-input-user--->
+                 </span>
+</div>
+        </form>  		
+
+
+    
+
+        <!------ Intensity  OLD
+        <form id="number1" class="fluid">
+        <div class="order-option">INTENSITY<br> 
+    		<span id="intensity-field"> 
+            <input type="text" id="intensity" class="text" value="" min="0" max="100"><img src="/luci-static/resources/percentage.png" alt=""/><br>       
+                 </span>
+        </div>			
+        </form>  ------>
+                
+        
+        <form method="post" action="<%=REQUEST_URI%>/set" enctype="multipart/form-data" >
+            <button onclick="submit" id="upfast" class="roundBTN" type="" name="intensity" value="10"><img src="/assets/darrowleft.png" alt=""/></button>
+        	<button onclick="submit" id="up" class="roundBTN" type="" name="intensity" value="1"><img src="/assets/arrowleft.png" alt=""/></button>&nbsp;&nbsp;&nbsp;
+           <button onclick="submit" id="down" class="roundBTN" type="" name="intensity" value="-1"><img src="/assets/arrowright.png" alt=""/></button>
+            <button onclick="submit" id="downfast" class="roundBTN" type="" name="intensity" value="-10"><img src="/assets/darrowright.png" alt=""/></button>   
+        </form>  
+
+            	
+    <!--- COLOR TEMP OLD
+        !--- Color Temperature ---
+        <form id="number2" class="fluid">
+       	    <div class="order-option">COLOR TEMPERATURE<br> 
+    		<span id="color-temperature-field">
+            <input type="text" id="colortemp" class="text" value="%colortempstate%" min="3000" max="6000"><img src="/luci-static/resources/k.png" alt=""/><br>   
+                </span>
+        	</div>!--- Text field --- 
+        </form>	--->
+
+<!--- Color Temperature NEW--->
+<form id="number2" method="post" action="<%=REQUEST_URI%>/set" enctype="multipart/form-data" class="fluid">
+       	    <div class="order-option">COLOR TEMPERATURE<br> 
+    		<span id="color-temperature-field">
+            <input class="text_sumo" type="text" name="ct_text" id="ct_text" value="<%=lua_colortemp%>",onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }" min="3000" max="6000"/><img src="/assets/k.png" alt=""/>    
+                </span>
+        	</div>
+        </form>
+              
+        
+        <form method="post" action="<%=REQUEST_URI%>/set" enctype="multipart/form-data" class="fluid">
+            <button onclick="submit" id="upfast" class="roundBTN" type="" name="colortemp" value="200"><img src="/assets/darrowleft.png" alt=""/></button>
+        	<button onclick="submit" id="up" class="roundBTN" type="" name="colortemp" value="10"><img src="/assets/arrowleft.png" alt=""/></button>&nbsp;&nbsp;&nbsp;
+            <button onclick="submit" id="down" class="roundBTN" type="" name="colortemp" value="-10"><img src="/assets/arrowright.png" alt=""/></button>
+            <button onclick="submit" id="downfast" class="roundBTN" type="" name="colortemp" value="-200"><img src="/assets/darrowright.png" alt=""/></button>
+        </form>
+        	
+		<!---</form>--->
+       
+        
+        <!--- DMX Address OLD 
+        <form id="number3" class="fluid">
+       	    <div class="order-option">DMX ADDRESS<br> 
+    		<span id="dmx-address-field">
+        	<input type="text" id="dmx" class="text" value="%dmxstate%" min="1" max="512"><br>              <!--- Text field ---
+          </span>
+        	</div>
+        </form>		--->
+
+<!--- DMX NEW--->
+<form id="number3" method="post" action="<%=REQUEST_URI%>/set" enctype="multipart/form-data" class="fluid">
+       	    <div class="order-option">DMX ADDRESS<br> 
+    		<span id="dmx-address-field">
+        	<input class="text_sumo" type="text" name="dmx_text" id="dmx" value="<%=lua_dmx%>",onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }" min="0" max="512"/><br>         
+          </span>
+        	</div>
+        </form>
+              
+
+        <form method="post" action="<%=REQUEST_URI%>/set" enctype="multipart/form-data" class="fluid">
+                <button onclick="submit" id="up" class="roundBTN" type="" name="dmx" value="1"><img src="/assets/arrowleft.png") alt=""/></button>&nbsp;&nbsp;&nbsp;
+             <button onclick="submit" id="down" class="roundBTN" type="" name="dmx" value="-1"><img src="/assets/arrowright.png" alt=""/></button>    
+        </form>
+            
+		<!---</form>--->
+        
+        
+    <br><br>                                    <!--- OnOff / Advanced / Info  --->
+      <!---  %onoffstate% --->
+        <div class ="order-option">
+        <form method="post" action="<%=REQUEST_URI%>/set" enctype="multipart/form-data"  >
+         <button id="onoff" class="roundBTN" onclick="submit" type="" name="onoff" value="1"><img src="/assets/on-off.png" alt=""/></button> &nbsp;&nbsp;&nbsp;
+            <button id="adv" class="roundBTN" onclick="toggle_visibility('adv_content')" type="button" name="onoff" value="2" ><img src="/assets/advanced.png" alt=""/></button> &nbsp;&nbsp;&nbsp;
+            <button id="info" class="roundBTN" onclick="toggle_visibility('info_content')" type="button" name="onoff" value="3" ><img src="/assets/info.png" alt=""/></button>
+       </form> 
+        </div>
+            </center>
+        <!----ADVANCED CONTENT---->
+            
+            <div id="adv_content" style="display:none;">
+                <p>ADVANCED:</p><br>
+                    comming soon..
+            </div>
+            
+            <!---INFO CONTENT--->
+            
+            <div id="info_content" style="display:none;">
+                <p>INFO:</p><br>
+                SSID: SUMOSPACE1 <br>
+                Password: none  <br>
+                Channel: 1      <br>
+                Authentification: none <br>
+                SSID hidden:    no      <br>
+                Max. connections:   4   <br>
+            </div>
+
+    
+</div>
+<div id='footer'>
+      OLA &copy; 2005-2015 Open Lighting Project<br>
+      <a href="mobile.html">Mobile Version</a> - <a href="new/">New UI (Beta)</a>
+    </div>
+</body>
+</html>

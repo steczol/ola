@@ -1,0 +1,23 @@
+/**
+ * @file Sumo.h
+ * @brief Function(s) for Sumolight purposes
+ */
+
+#include "ola/Logging.h"
+#include <stdint.h>
+#include <iostream>
+#include <string>
+
+//#include <string>
+/**
+ * @brief Display debug-message in the terminal.
+ * @param msg is the message that will be displayed
+ * @return void
+ */
+
+void DebugSumo(std::string msg);
+int dmx2sumo(std::string str);
+//bool SetFromString(const string &input);
+
+
+

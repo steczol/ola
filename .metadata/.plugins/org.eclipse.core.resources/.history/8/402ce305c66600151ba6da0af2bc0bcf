@@ -1,0 +1,23 @@
+/**
+ * @file Debug_Sumo.h
+ * @brief Function(s) for debug purposes
+ */
+
+#include "ola/Logging.h"
+#include <stdint.h>
+#include <iostream>
+#include <string>
+
+//#include <string>
+/**
+ * @brief Display debug-message in the terminal.
+ * @param msg is the message that will be displayed
+ * @return void
+ */
+
+void DebugSumo(std::string msg);
+
+//bool SetFromString(const string &input);
+
+
+

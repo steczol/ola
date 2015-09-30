@@ -1,0 +1,159 @@
+<!doctype html>
+<html class="">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUMOLIGHT | SPACELIGHT</title>
+
+<link href="boilerplate.css" rel="stylesheet" type="text/css">
+<link href="style.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="spacelight.js"></script>
+<script type="text/javascript" src="/new/libs/angular/js/angular.min.js"></script> 
+  <!---  <script type="text/javascript" src="/new/libs/angular-route/js/angular-route.min.js"></script>--->
+  <script type="text/javascript" src="/new/libs/jquery/js/jquery.min.js"></script>
+  <script type="text/javascript" src="/new/libs/bootstrap/js/bootstrap.min.js"></script>
+ <!-- <script type="text/javascript" src="/new/js/app.min.js"></script>
+<script src="respond.min.js"></script>
+<script src="setquantity.js"></script> -->
+   <script type="text/javascript">
+    var previous;
+       previous.style.display='none';
+   /* function unhide(divID) {
+        var item = document.getElementById(divID);
+
+        if (previous != null)
+            previous.className='hidden';
+        
+
+        if (item.className=='hidden') {
+            item.className='unhidden';
+        }
+        else
+        {
+            item.className='hidden';
+            //if(item.className=='hidden') {item.className='unhidden';}
+            //else if(item.className=='unhidden') {item.className=='hidden'; }//previous.className='hidden';}
+            //item.className=(item.className=='hidden')?'unhidden':'hidden';
+        }
+        previous = item; 
+    } */
+ function toggle_visibility(id) {
+var e = document.getElementById(id);
+e.style.display = ((e.style.display!='none') ? 'none' : 'block');
+}
+</script>
+</head>
+<body ng-app="getterSetterExample">
+         <center>   
+<div class="gridContainer clearfix">
+        <div id="div1" class="fluid"><img src="assets/logo.png" alt="logo" />    <!--- SUMO LOGO --->
+
+
+    <div ng-controller="ExampleController">
+  <form name="userForm">
+    <label>Name:
+      <input type="text" name="userName"
+             ng-model="user.name"
+             ng-model-options="{ getterSetter: true }" />
+    </label>
+  </form>
+  <pre>user.name = <span ng-bind="user.name()"></span></pre>
+</div>
+
+
+        <!--- Intensity --->
+        <form id="number1" class="fluid">
+        <div class="order-option">INTENSITY<br> 
+    		<span id="intensity-field"> 
+            <input type="text" id="Intensity" class="text" value="{{OLA.INTENSITY}}" ng-model="Intensity.text" min="0" max="100"><img src="assets/percentage.png" alt=""/><br>        <!--- Text field --->
+                 </span>
+        </div>
+        </form>  
+                
+        
+        <form method="post" action="" type="submit" >
+            <button id="upfast" class="roundBTN" type="button" ng-model="Intensity.val" ng-click="Reload()"><img src="assets/darrowleft.png" alt=""/></button>
+        	<button id="up" class="roundBTN" type="button" ng-model="Intensity.val" ng-click="Reload()"><img src="assets/arrowleft.png" alt=""/></button>&nbsp;&nbsp;&nbsp;
+            <button id="down" class="roundBTN" type="button" ng-model="Intensity.val" ng-click="setIntensity(-1)"><img src="assets/arrowright.png" alt=""/></button>
+            <button id="downfast" class="roundBTN" type="button" ng-model="Intensity.val" ng-click="setIntensity(-10)"><img src="assets/darrowright.png" alt=""/></button>
+        </form>  
+           
+		<!---</form>--->
+        	
+    
+        <!--- Color Temperature --->
+        <form id="number2" class="fluid">
+       	    <div class="order-option">COLOR TEMPERATURE<br> 
+    		<span id="color-temperature-field">
+            <input type="text" id="colortemp" class="text" value="%colortempstate%" min="3000" max="6000"><img src="assets/k.png" alt=""/><br>   
+                </span>
+        	</div><!--- Text field --->   
+        </form>
+              
+        
+        <form method="post" action="colorTemp.cgi" type="submit" >
+            <button id="upfast" class="roundBTN" type="submit" name="colortemp" value="-200"><img src="assets/darrowleft.png" alt=""/></button>
+        	<button id="up" class="roundBTN" type="submit" name="colortemp" value="-20"><img src="assets/arrowleft.png" alt=""/></button>&nbsp;&nbsp;&nbsp;
+            <button id="down" class="roundBTN" type="submit" name="colortemp" value="20"><img src="assets/arrowright.png" alt=""/></button>
+            <button id="downfast" class="roundBTN" type="submit" name="colortemp" value="200"><img src="assets/darrowright.png" alt=""/></button>
+        </form>
+        	
+		<!---</form>--->
+       
+        
+        <!--- DMX Address --->
+        <form id="number3" class="fluid">
+       	    <div class="order-option">DMX ADDRESS<br> 
+    		<span id="dmx-address-field">
+        	<input type="text" id="dmx" class="text" value="%dmxstate%" min="1" max="512"><br>              <!--- Text field --->
+          </span>
+        	</div>
+        </form>
+              
+              
+         <form method="post" action="dmx.cgi" type="submit" >	
+                <button id="up" class="roundBTN" type="submit" name="dmx" value="-1"><img src="assets/arrowleft.png" alt=""/></button>&nbsp;&nbsp;&nbsp;
+             <button id="down" class="roundBTN" type="submit" name="dmx" value="1"><img src="assets/arrowright.png" alt=""/></button>    
+        </form>
+            
+		<!---</form>--->
+        
+        
+    <br><br>                                    <!--- OnOff / Advanced / Info  --->
+      <!---  %onoffstate% --->
+        <div class ="order-option">
+       <form method="post" action="onoff.cgi" type="submit"  >
+         <button id="onoff" class="roundBTN" type="submit" name="onoff" value="1"><img src="assets/on-off.png" alt=""/></button> &nbsp;&nbsp;&nbsp;
+            <button id="adv" class="roundBTN" onclick="toggle_visibility('adv_content')" type="submit" name="onoff" value="2" ><img src="assets/advanced.png" alt=""/></button> &nbsp;&nbsp;&nbsp;
+            <button id="info" class="roundBTN" onclick="toggle_visibility('info_content')" type="submit" name="onoff" value="3" ><img src="assets/info.png" alt=""/></button>
+       </form> 
+        </div>
+            </center>
+        <!----ADVANCED CONTENT---->
+            
+            <div id="adv_content" style="display:none;">
+                <p>ADVANCED:</p><br>
+                    comming soon..
+            </div>
+            
+            <!---INFO CONTENT--->
+            
+            <div id="info_content" style="display:none;">
+                <p>INFO:</p><br>
+                SSID: SUMOSPACE1 <br>
+                Password: none  <br>
+                Channel: 1      <br>
+                Authentification: none <br>
+                SSID hidden:    no      <br>
+                Max. connections:   4   <br>
+            </div>
+
+    <div id='footer'>
+      OLA &copy; 2005-2015 Open Lighting Project<br>
+      <a href="mobile.html">Mobile Version</a> - <a href="new/">New UI (Beta)</a>
+    </div>
+</div>
+</body>
+</html>
+        	

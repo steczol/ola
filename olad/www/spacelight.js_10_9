@@ -1,0 +1,52 @@
+/**
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Library General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+ *
+ * The new OLA web UI.
+ * Copyright (C) 2015 Dave Olsthoorn
+ */
+/*jshint browser: true */
+/* global angular, $ */
+(function(angular) {
+  'use strict';
+angular.module('getterSetterExample', [])
+  .controller('ExampleController', ['$scope', function($scope) {
+    var _name = 'Brian';
+    $scope.user = {
+      name: function(newName) {
+       // Note that newName can be undefined for two reasons:
+       // 1. Because it is called as a getter and thus called with no arguments
+       // 2. Because the property should actually be set to undefined. This happens e.g. if the
+       //    input is invalid
+       return arguments.length ? (_name = newName) : _name;
+      }
+    };
+  }])
+.config(['$routeProvider', function($routeProvider) {
+    'use strict';
+    $routeProvider.when('/', {
+      templateUrl: '/ola.html',
+      controller: 'pluginsCtrl'
+    }).otherwise({
+      redirectTo: '/'
+    });
+  }])
+  .filter('startFrom', function() {
+    'use strict';
+    return function(input, start) {
+      start = parseInt(start, 10);
+      return input.slice(start);
+    };
+  });
+})(window.angular);

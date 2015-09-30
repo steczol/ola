@@ -1,0 +1,55 @@
+/**
+ * @file Sumo.h
+ * @brief Function(s) for Sumolight purposes
+ */
+
+#include "Sumo.h"
+#include "ola/Logging.h"
+#include <stdint.h>
+#include <iostream>
+#include <string>
+#include <vector>
+
+using ola::MemoryPreferencesFactory;
+using ola::Preferences;
+using ola::FileBackedPreferences;
+using ola::FileBackedPreferencesFactory;
+//#include "std::vector"
+
+void DebugSumo(std::string msg){
+
+    OLA_WARN << msg;
+}
+int dmx2sumo(std::string str, int j){
+	std::vector<int> vect;
+	std::stringstream ss(str);
+	int i;
+
+	  while (ss >> i)
+	  {
+	      vect.push_back(i);
+
+	      if (ss.peek() == ',')
+	          ss.ignore();
+	  }
+	  int arr[5];
+	  std::copy(vect.begin(), vect.end(), arr);
+	  return arr[j];
+}
+class SumoPreferences{
+
+public:
+    void setUp() {
+      ola::InitLogging(ola::OLA_LOG_DEBUG, ola::OLA_LOG_STDERR);
+    }
+    void Validators();
+    void GetSetRemove();
+    void Bool();
+    void Factory();
+    void Load();
+    void Save();
+};
+
+void SumoPreferences::GetSetRemove() {
+  MemoryPreferencesFactory factory;
+  Preferences *preferences = factory.NewPreference("dummy");

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete 10 resources" deleteContents="false" description="Delete 10 resources" element1="/autom4te.cache" element10="/olad" element2="/common" element3="/config" element4="/data" element5="/debian" element6="/doxygen" element7="/examples" element8="/include" element9="/ola" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="10" stamp="1442503150719"/>
+</session>

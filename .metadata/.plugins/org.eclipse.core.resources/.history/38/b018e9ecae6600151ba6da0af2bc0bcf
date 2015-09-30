@@ -1,0 +1,36 @@
+/**
+ * @file Debug_Sumo.h
+ * @brief Function(s) for debug purposes
+ */
+
+#include "Debug_Sumo.h"
+//#include "std::vector"
+
+void DebugSumo(std::string msg){
+
+    OLA_WARN << msg;
+}
+
+/*bool SetFromString(const string &input) {
+  unsigned int i = 0;
+  vector<string> dmx_values;
+  vector<string>::const_iterator iter;
+
+  if (m_copy_on_write)
+    CleanupMemory();
+  if (!m_data)
+    if (!Init())
+      return false;
+
+  if (input.empty()) {
+    m_length = 0;
+    return true;
+  }
+  StringSplit(input, &dmx_values, ",");
+  for (iter = dmx_values.begin();
+      iter != dmx_values.end() && i < DMX_UNIVERSE_SIZE; ++iter, ++i) {
+    m_data[i] = atoi(iter->data());
+  }
+  m_length = i;
+  return true;
+} */

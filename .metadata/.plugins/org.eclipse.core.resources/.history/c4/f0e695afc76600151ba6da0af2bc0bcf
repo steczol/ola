@@ -1,0 +1,31 @@
+/**
+ * @file Sumo.h
+ * @brief Function(s) for Sumolight purposes
+ */
+
+#include "Sumo.h"
+
+//#include "std::vector"
+
+void DebugSumo(std::string msg){
+
+    OLA_WARN << msg;
+}
+std::string dmx2sumo(std::string str){
+	std::vector<int> vect;
+	std::stringstream ss(str);
+	int i;
+
+	  while (ss >> i)
+	  {
+	      vect.push_back(i);
+
+	      if (ss.peek() == ',')
+	          ss.ignore();
+	  }
+	  int arr[5];
+	  std::copy(vect.begin(), vect.end(), arr);
+	  return arr;
+}
+
+

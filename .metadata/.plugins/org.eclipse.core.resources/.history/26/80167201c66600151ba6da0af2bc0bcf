@@ -1,0 +1,15 @@
+/**
+ * @file Sumo.h
+ * @brief Function(s) for debug purposes
+ */
+
+#include "Sumo.h"
+
+//#include "std::vector"
+
+void DebugSumo(std::string msg){
+
+    OLA_WARN << msg;
+}
+
+
