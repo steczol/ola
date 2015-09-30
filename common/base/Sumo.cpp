@@ -4,7 +4,7 @@
  */
 
 #include "Sumo.h"
-#include <cppunit/extensions/HelperMacros.h>
+//#include <cppunit/extensions/HelperMacros.h>
 #include <set>
 #include <string>
 #include <vector>
