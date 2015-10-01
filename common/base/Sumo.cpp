@@ -4,7 +4,7 @@
  */
 
 #include "Sumo.h"
-#include <cppunit/extensions/HelperMacros.h>
+//#include <cppunit/extensions/HelperMacros.h>
 #include <set>
 #include <string>
 #include <vector>
@@ -12,7 +12,7 @@
 #include "ola/Logging.h"
 #include "ola/StringUtils.h"
 #include "olad/Preferences.h"
-#include "ola/testing/TestUtils.h"
+//#include "ola/testing/TestUtils.h"
 
 
 using ola::BoolValidator;
